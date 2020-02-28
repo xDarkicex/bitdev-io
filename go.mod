@@ -1,4 +1,4 @@
-module github.com/xDarkicex/bitdev.io.helpers
+module github.com/xDarkicex/bitdevs
 
 go 1.13
 
