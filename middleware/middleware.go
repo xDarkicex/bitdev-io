@@ -28,7 +28,7 @@ var SecureDefaultConfig = Config{
 	StrictTransfer:        "max-age=31536000; includeSubDomains",
 }
 
-// Secure header middleware
+// Secure header middleware did I?
 func SecureHeader() echo.MiddlewareFunc {
 	return secureHeaderWithConfig(SecureDefaultConfig)
 }
