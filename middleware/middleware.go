@@ -30,35 +30,35 @@ var SecureDefaultConfig = Config{
 
 // Secure header middleware did I?
 func SecureHeader() echo.MiddlewareFunc {
-	return secureHeaderWithConfig(SecureDefaultConfig)
+		return secureHeaderWithConfig(SecureDefaultConfig)
 }
 
 func secureHeaderWithConfig(config Config) echo.MiddlewareFunc {
-	if config.Skipper == nil {
-		config.Skipper = SecureDefaultConfig.Skipper
-	}
-	if config.ContentTypeNosniff == "" {
-		config.ContentTypeNosniff = SecureDefaultConfig.ContentTypeNosniff
-	}
-	if config.XSSProtection == "" {
-		config.XSSProtection = SecureDefaultConfig.XSSProtection
-	}
-	if config.ContentSecurityPolicy == "" {
-		config.ContentSecurityPolicy = SecureDefaultConfig.ContentSecurityPolicy
-	}
-	if config.StrictTransfer == "" {
-		config.StrictTransfer = SecureDefaultConfig.StrictTransfer
-	}
-	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-			if config.Skipper(c) {
-				return next(c)
-			}
-			c.Response().Header().Set(echo.HeaderStrictTransportSecurity, config.StrictTransfer)
-			c.Response().Header().Set(echo.HeaderContentSecurityPolicy, config.ContentSecurityPolicy)
-			c.Response().Header().Set(echo.HeaderXXSSProtection, config.XSSProtection)
-			c.Response().Header().Set(echo.HeaderXContentTypeOptions, config.ContentTypeNosniff)
-			return next(c)
+		if config.Skipper == nil {
+				config.Skipper = SecureDefaultConfig.Skipper
 		}
-	}
+		if config.ContentTypeNosniff == "" {
+				config.ContentTypeNosniff = SecureDefaultConfig.ContentTypeNosniff
+		}
+		if config.XSSProtection == "" {
+				config.XSSProtection = SecureDefaultConfig.XSSProtection
+		}
+		if config.ContentSecurityPolicy == "" {
+				config.ContentSecurityPolicy = SecureDefaultConfig.ContentSecurityPolicy
+		}
+		if config.StrictTransfer == "" {
+				config.StrictTransfer = SecureDefaultConfig.StrictTransfer
+		}
+		return func(next echo.HandlerFunc) echo.HandlerFunc {
+				return func(c echo.Context) error {
+						if config.Skipper(c) {
+								return next(c)
+						}
+						c.Response().Header().Set(echo.HeaderStrictTransportSecurity, config.StrictTransfer)
+						c.Response().Header().Set(echo.HeaderContentSecurityPolicy, config.ContentSecurityPolicy)
+						c.Response().Header().Set(echo.HeaderXXSSProtection, config.XSSProtection)
+						c.Response().Header().Set(echo.HeaderXContentTypeOptions, config.ContentTypeNosniff)
+						return next(c)
+				}
+		}
 }
